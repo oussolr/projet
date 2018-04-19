@@ -1,0 +1,9 @@
+{% if etds %}
+    <ul>
+        {% for etd in etds %}
+        <li> <a href="/administration/{{ etd.id }}">{{ etd.Nom }}</a> </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h2>pas d'étudiant</h2>
+{% endif %}
