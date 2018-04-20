@@ -1,24 +1,20 @@
 from django.db import models
 
-class Adresse(models.Model):
-    ville = models.CharField(max_length=30)
-    Rue = models.CharField(max_length=30)
-    N_lot = models.IntegerField()
-    Code_Postal = models.IntegerField()
-    Longitude = models.FloatField()
-    Latitude = models.FloatField()
 
 
-    def __str__(self):
-        return self.Rue + ' - ' + self.ville
+class Annee_Scolaire(models.Model):
+    Annee = models.DateField()
+    Specialite = models.CharField(max_length=30)
+    Moy_G = models.FloatField()
+    Moy_S1 = models.FloatField()
+    Moy_S1 = models.FloatField()
 
 class Etudiant(models.Model):
     Nom = models.CharField(max_length=30)
     Prenom = models.CharField(max_length=30)
     Date_De_Naissance = models.DateField()
     Email = models.EmailField()
-    Adresse = models.ForeignKey(Adresse, on_delete=models.CASCADE)
-    Année_Scolaire = models.ForeignKey(Année_Scolaire, on_delete=models.CASCADE)
+    Annee_Scolaire = models.ForeignKey(Annee_Scolaire, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.Nom + ' - ' + self.Prenom
@@ -31,14 +27,7 @@ class Entreprise(models.Model):
     Description = models.CharField(max_length=300)
     Logo = models.ImageField(default='default.png', blank=True)
     P_Couverture = models.ImageField(default='default.png', blank=True)
-    Adresse = models.ForeignKey(Adresse, on_delete=models.CASCADE)
 
-class Année_Scolaire(models.Model):
-    Année = models.DateField()
-    Specialite = models.CharField(max_length=30)
-    Moy_G = models.IntegerField()
-    Moy_S1 = models.IntegerField()
-    Moy_S1 = models.IntegerField()
 
 class Encadreur(models.Model):
     Nom = models.CharField(max_length=30)
@@ -47,10 +36,10 @@ class Encadreur(models.Model):
     Email = models.EmailField()
 
 class Stage_Propose(models.Model):
-    Durée = models.IntegerField()
+    Durée = models.DurationField()
     theme = models.CharField(max_length=30)
     Date_limite = models.DateField()
-    Adresse = models.ForeignKey(Adresse, on_delete=models.CASCADE)
+
     Entreprise = models.ForeignKey(Entreprise, on_delete=models.CASCADE)
 
 class Raport(models.Model):
@@ -66,7 +55,7 @@ class Payement(models.Model):
     Frais_Dhebergement = models.FloatField()
 
 class Stage (models.Model):
-    Etat = models.CharField()
+    Etat = models.CharField(max_length=30,default='en cour')
     Date_debut = models.DateField()
     Date_fin = models.DateField()
     Type_De_Stage = models.CharField(max_length=30)
